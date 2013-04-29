@@ -10,7 +10,7 @@ require 'twilio-ruby'
   - VoIP number: ENV["VOIP_NUMBER"]
 =end
 
-@client = Twilio::REST::Client.new(ENV['ACCOUNT_SID'], ENV[''])
+@client = Twilio::REST::Client.new(ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN'])
 # shortcut to grab your account object (account_sid is inferred from the client's auth credentials)
 @account = @client.account
 
