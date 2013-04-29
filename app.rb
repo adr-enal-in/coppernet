@@ -21,10 +21,10 @@ def get_or_post(path, opts={}, &block)
   post(path, opts, &block)
 end
 
-# Home page and reference
 get '/' do
-  @title = "Home"
-  erb :home
+  response = Twilio::TwiML::Response.new do |r|
+    r.Say 'Forwarding your call', :voice => 'woman'
+  end
 end
 
 # Voice Request URL
