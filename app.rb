@@ -25,9 +25,8 @@ get '/' do
   #response = Twilio::TwiML::Response.new do |r|
   #  r.Say 'Forwarding your call', :voice => 'woman'
   #end
-  #redirect "http://twimlets.com/simulring?PhoneNumbers%5B0%5D=#{ENV["CELL_NUMBER"]}&PhoneNumbers%5B1%5D=#{ENV["VOIP_NUMBER"]}&"
   content_type 'application/xml'
-  File.open("#{Dir.pwd}/public/step1.xml", File::RDONLY).readlines
+  erb :forward, locals: {cell_number: ENV["CELL_NUMBER"], voip_number: ENV["VOIP_NUMBER"]}
 end
 
 get_or_post '/sms' do
