@@ -10,9 +10,9 @@ require 'twilio-ruby'
   - VoIP number: ENV["VOIP_NUMBER"]
 =end
 
-@client = Twilio::REST::Client.new(ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN'])
+#@client = Twilio::REST::Client.new(ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN'])
 # shortcut to grab your account object (account_sid is inferred from the client's auth credentials)
-@account = @client.account
+#@account = @client.account
 
 
 # A hack around multiple routes in Sinatra
@@ -22,11 +22,13 @@ def get_or_post(path, opts={}, &block)
 end
 
 get '/' do
-  response = Twilio::TwiML::Response.new do |r|
-    r.Say 'Forwarding your call', :voice => 'woman'
-  end
+  #response = Twilio::TwiML::Response.new do |r|
+  #  r.Say 'Forwarding your call', :voice => 'woman'
+  #end
+  redirect "http://twimlets.com/simulring?PhoneNumbers%5B0%5D=#{ENV["CELL_NUMBER"]}&PhoneNumbers%5B1%5D=#{ENV["VOIP_NUMBER"]}&"
 end
 
+=begin
 # Voice Request URL
 get_or_post '/voice/?' do
   response = Twilio::TwiML::Response.new do |r|
@@ -61,7 +63,7 @@ get_or_post '/client/?' do
   @token = capability.generate
   erb :client
 end
-
+=end
 #simulring(numbers=[]) do
 #  response = Twilio::TwiML::Response.new do |r|
 #    r.Dial action: "http://twimlets.com/simulring?PhoneNumbers%5B0%5D=#{ENV["CELL_NUMBER"]}&PhoneNumbers%5B1%5D=#{ENV["VOIP_NUMBER"]}&"
