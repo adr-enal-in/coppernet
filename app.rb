@@ -27,13 +27,7 @@ get '/' do
   #end
   #redirect "http://twimlets.com/simulring?PhoneNumbers%5B0%5D=#{ENV["CELL_NUMBER"]}&PhoneNumbers%5B1%5D=#{ENV["VOIP_NUMBER"]}&"
   content_type 'application/xml'
-  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+
-  "<Response>\n"+
-  '<Dial action="/simulring?Dial=true&amp;FailUrl=" timeout="20">'+"\n"+
-  '<Number url="whisper?Message=">3102200535</Number>'+"\n"+
-  '<Number url="whisper?Message=">3104000331</Number>'+"\n"+
-  "</Dial>\n"+
-  "</Response>\n"
+  File.open("#{Dir.pwd}/public/step1.xml", File::RDONLY).readlines
 end
 
 =begin
