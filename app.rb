@@ -30,6 +30,11 @@ get '/' do
   File.open("#{Dir.pwd}/public/step1.xml", File::RDONLY).readlines
 end
 
+get_or_post '/sms' do
+  content_type 'application/xml'
+  erb :sms
+end
+
 =begin
 # Voice Request URL
 get_or_post '/voice/?' do
