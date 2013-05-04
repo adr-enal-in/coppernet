@@ -32,7 +32,7 @@ end
 
 get_or_post '/sms' do
   content_type 'application/xml'
-  erb :sms
+  erb :sms, locals: {message: params[:Body]}
 end
 
 =begin
