@@ -26,7 +26,7 @@ get '/' do
   #  r.Say 'Forwarding your call', :voice => 'woman'
   #end
   content_type 'application/xml'
-  erb :forward, locals: {cell_number: ENV["CELL_NUMBER"], voip_number: ENV["VOIP_NUMBER"]}
+  erb :forward, locals: {caller_number: params[:From], cell_number: ENV["CELL_NUMBER"], voip_number: ENV["VOIP_NUMBER"]}
 end
 
 get_or_post '/sms' do
