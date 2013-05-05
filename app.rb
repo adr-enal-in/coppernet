@@ -16,12 +16,14 @@ def get_or_post(path, opts={}, &block)
   post(path, opts, &block)
 end
 
+def recognized_number?(number)
+  return false if ENV["CELL_NUMBER"].nil? || ENV["VOIP_NUMBER"].nil?
+  number == ENV["CELL_NUMBER"] || number == ENV["VOIP_NUMBER"]
+end
+
 get '/' do
-  #response = Twilio::TwiML::Response.new do |r|
-  #  r.Say 'Forwarding your call', :voice => 'woman'
-  #end
   content_type 'application/xml'
-  if params[:From] == ENV["CELL_NUMBER"] && params[:From] == ENV["VOIP_NUMBER"]
+  if recognized_number?(params[:From])
     erb :private_menu
   else
     erb :forward, locals: {caller_number: params[:From], cell_number: ENV["CELL_NUMBER"], voip_number: ENV["VOIP_NUMBER"]}
