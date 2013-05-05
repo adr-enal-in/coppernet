@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Say voice="woman">Forwarding your call.</Say>
-  <Dial timeout="20" callerId="<%= voip_number %>"><%= cell_number %></Dial>
+  <Dial timeout="20" callerId="<%= voip_number %>">
+    <Number><%= cell_number %></Number>
+    <Number><%= voip_number %></Number>
+  </Dial>
 </Response>
