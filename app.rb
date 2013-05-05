@@ -25,6 +25,7 @@ get '/' do
     erb :private_menu
   else
     erb :forward, locals: {caller_number: params[:From], cell_number: ENV["CELL_NUMBER"], voip_number: ENV["VOIP_NUMBER"]}
+  end
 end
 
 get_or_post '/sms' do
