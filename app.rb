@@ -1,14 +1,7 @@
 require 'sinatra'
 require 'twilio-ruby'
 
-=begin
-  ENV VARS
-  - Account SID: ENV["ACCOUNT_SID"]
-  - Auth token: ENV["AUTH_TOKEN"]
-  - Cell number: ENV["CELL_NUMBER"]
-  - Twilio number: ENV["TWILIO_NUMBER"]
-  - VoIP number: ENV["VOIP_NUMBER"]
-=end
+@voice = "woman"
 
 # A hack around multiple routes in Sinatra
 def get_or_post(path, opts={}, &block)
@@ -24,7 +17,7 @@ end
 get '/' do
   content_type 'application/xml'
   if recognized_number?(params[:From])
-    erb :private_menu
+    erb :private_menu, locals: {voice: @voice}
   else
     erb :forward, locals: {caller_number: params[:From], cell_number: ENV["CELL_NUMBER"], voip_number: ENV["VOIP_NUMBER"]}
   end
@@ -35,9 +28,17 @@ get_or_post '/sms' do
   erb :sms, locals: {message: params[:Body]}
 end
 
-#simulring(numbers=[]) do
-#  response = Twilio::TwiML::Response.new do |r|
-#    r.Dial action: "http://twimlets.com/simulring?PhoneNumbers%5B0%5D=#{ENV["CELL_NUMBER"]}&PhoneNumbers%5B1%5D=#{ENV["VOIP_NUMBER"]}&"
-#  end
-#  puts response.text
-#end
+get_or_post '/process-private-menu' do
+  content_type 'application/xml'
+  case params[:Digits].to_i
+  when 1
+    erb :voicemail
+  when 2
+    erb :capture_dial_out, locals: {voice: @voice}
+  end
+end
+
+get_or_post '/dial-out' do
+  content_type 'application/xml'
+  erb :dial_out, locals: {outgoing_number: params[:Digits], voice: @voice}
+end
