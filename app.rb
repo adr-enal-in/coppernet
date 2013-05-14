@@ -1,5 +1,6 @@
-require 'sinatra'
-require 'twilio-ruby'
+require "sinatra"
+require "twilio-ruby"
+require "json"
 
 @voice = "woman"
 
@@ -19,7 +20,11 @@ get '/' do
   if recognized_number?(params[:From])
     erb :private_menu, locals: {voice: @voice}
   else
-    erb :forward, locals: {caller_number: params[:From], cell_number: ENV["CELL_NUMBER"], voip_number: ENV["VOIP_NUMBER"]}
+    if is_on_blacklist?(params[:From])
+      erb :blocked_caller, locals: {voice: @voice}
+    else
+      erb :forward, locals: {caller_number: params[:From], cell_number: ENV["CELL_NUMBER"], voip_number: ENV["VOIP_NUMBER"]}
+    end
   end
 end
 
@@ -41,4 +46,24 @@ end
 get_or_post '/dial-out' do
   content_type 'application/xml'
   erb :dial_out, locals: {outgoing_number: params[:Digits], voice: @voice}
+end
+
+def is_on_blacklist?(caller_number)
+  begin
+    uri = URI.parse(ENV["BLACKLIST_URL"])
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    request = Net::HTTP::Get.new(uri.request_uri)
+    response = http.request(request)
+    blacklist = JSON.parse(response.body)
+    blacklist.each do |record|
+      return true if record["number"].to_i == caller_number.to_i
+    end
+    false
+  rescue Exception => e
+    puts e.message
+    puts e.backtrace.inspect
+    false
+  end
 end
