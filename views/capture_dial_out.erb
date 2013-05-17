@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Gather action="/dial-out" timeout="30" finishOnKey="#" numDigits="11">
-    <Say voice="<%= voice %>">Enter the phone number</Say>
+  <Gather action="/dial-out" method="POST" timeout="30" finishOnKey="#" numDigits="11">
+    <Say voice="<%= voice %>">Enter the phone number you want to dial</Say>
+    <Say voice="<%= voice %>">When you are finished hit the pound key</Say>
   </Gather>
 </Response>
-

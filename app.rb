@@ -1,44 +1,44 @@
-require 'sinatra'
+require 'sinatra/base'
 require 'twilio-ruby'
 
-@voice = "woman"
+class CopperNet < Sinatra::Base
+  set :voice, "woman"
+  set :logging, true
+  set :bind, "127.0.0.1" # avoid 0.0.0.0 on all interfaces
 
-# A hack around multiple routes in Sinatra
-def get_or_post(path, opts={}, &block)
-  get(path, opts, &block)
-  post(path, opts, &block)
-end
+  get '/' do
+    content_type 'application/xml'
+    if recognized_number?(params[:From])
+      erb :private_menu, locals: {voice: @voice}
+    else
+      erb :forward, locals: {caller_number: params[:From], cell_number: ENV["CELL_NUMBER"], voip_number: ENV["VOIP_NUMBER"]}
+    end
+  end
 
-def recognized_number?(number)
-  return false if ENV["CELL_NUMBER"].nil? || ENV["VOIP_NUMBER"].nil?
-  number == ENV["CELL_NUMBER"] || number == ENV["VOIP_NUMBER"]
-end
+  post '/sms' do
+    content_type 'application/xml'
+    erb :sms, locals: {message: params[:Body]}
+  end
 
-get '/' do
-  content_type 'application/xml'
-  if recognized_number?(params[:From])
-    erb :private_menu, locals: {voice: @voice}
-  else
-    erb :forward, locals: {caller_number: params[:From], cell_number: ENV["CELL_NUMBER"], voip_number: ENV["VOIP_NUMBER"]}
+  post '/process-private-menu' do
+    content_type 'application/xml'
+    case params[:Digits].to_i
+    when 1
+      erb :voicemail
+    when 2
+      erb :capture_dial_out, locals: {voice: @voice}
+    end
+  end
+
+  post '/dial-out' do
+    content_type 'application/xml'
+    erb :dial_out, locals: {outgoing_number: params[:Digits], voice: @voice}
+  end
+
+  def recognized_number?(number)
+    return false if ENV["CELL_NUMBER"].nil? || ENV["VOIP_NUMBER"].nil?
+    number == ENV["CELL_NUMBER"] || number == ENV["VOIP_NUMBER"]
   end
 end
 
-get_or_post '/sms' do
-  content_type 'application/xml'
-  erb :sms, locals: {message: params[:Body]}
-end
-
-get_or_post '/process-private-menu' do
-  content_type 'application/xml'
-  case params[:Digits].to_i
-  when 1
-    erb :voicemail
-  when 2
-    erb :capture_dial_out, locals: {voice: @voice}
-  end
-end
-
-get_or_post '/dial-out' do
-  content_type 'application/xml'
-  erb :dial_out, locals: {outgoing_number: params[:Digits], voice: @voice}
-end
+CopperNet.run!
