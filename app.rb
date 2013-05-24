@@ -41,4 +41,4 @@ class CopperNet < Sinatra::Base
   end
 end
 
-CopperNet.run!
+CopperNet.run! if ENV["RACK_ENV"] != "test"
