@@ -30,4 +30,11 @@ describe "Twilio" do
   it "should recognize VOIP number" do
     app.recognized_number?(ENV["VOIP_NUMBER"]).should be_true
   end
+
+  it "should forward emails" do
+    sms_body = "testing sms"
+    post "/sms", {:Body => sms_body}
+    doc = Nokogiri::XML(last_response.body)
+    doc.xpath("//Response/Sms").first.content.should == sms_body
+  end
 end
