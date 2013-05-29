@@ -37,4 +37,10 @@ describe "Twilio" do
     doc = Nokogiri::XML(last_response.body)
     doc.xpath("//Response/Sms").first.content.should == sms_body
   end
+
+  it "should ask for dial out" do
+    post "/process-private-menu", {:Digits => 2}
+    doc = Nokogiri::XML(last_response.body)
+    doc.xpath("//Response/Gather").first["action"].should == "/dial-out"
+  end
 end
