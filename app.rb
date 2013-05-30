@@ -1,8 +1,6 @@
 require 'sinatra/base'
 require 'twilio-ruby'
 
-puts "test"
-
 class CopperNet < Sinatra::Base
   set :voice, "woman"
   set :logging, true
@@ -43,6 +41,4 @@ class CopperNet < Sinatra::Base
   end
 end
 
-puts "ECHOOOOOOO"
-puts "ECHO2" if ENV["RACK_ENV"] != "test"
 CopperNet.run! if ENV["RACK_ENV"] != "test"

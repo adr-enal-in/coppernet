@@ -1,2 +1,2 @@
 require './app'
-run CopperNet
+CopperNet.run!
