@@ -1,10 +1,12 @@
 require 'sinatra/base'
 require 'twilio-ruby'
 
+puts "test"
+
 class CopperNet < Sinatra::Base
   set :voice, "woman"
   set :logging, true
-  set :bind, "127.0.0.1" # avoid 0.0.0.0 on all interfaces
+  #set :bind, "127.0.0.1" # avoid 0.0.0.0 on all interfaces
 
   get '/' do
     content_type 'application/xml'
