@@ -4,8 +4,8 @@ gem "twilio-ruby", "~> 3.9.0"
 gem "trollop", "~> 2.0"
 
 group :test do
-  #gem "twilio-test-toolkit", "~> 3.1.0"
-  #gem "capybara", "~> 2.1.0"
+  gem "twilio-test-toolkit", "~> 3.1.0"
+  gem "capybara", "~> 2.1.0"
 end
 
 group :production do

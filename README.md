@@ -2,6 +2,8 @@
 
 Welcome to the telephonic cyberspace. Coppernet is an attempt at replacing my Google Voice account with additional features.
 
+*Note: requires Ruby 1.9.3+*
+
 ## Features
 - Simultaneously forward to multiple numbers
 - Dialing out with caller ID
