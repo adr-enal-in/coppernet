@@ -5,10 +5,20 @@ Welcome to the telephonic cyberspace. Coppernet is an attempt at replacing my Go
 ## Features
 - Simultaneously forward to multiple numbers
 - Dialing out with caller ID
+- Customizable telemarketer blacklist
 
 ## To Do
-- Telemarketer blacklist
 - Voicemail
+
+## Blacklist
+Add numbers to the [blacklist](https://gist.github.com/adr-enal-in/5578514) in the format:
+
+```
+[
+  {"number": "3101938822", "comment": "Insurance Company"},
+  {"number": "3103438822", "comment": "Cable Company"}
+]
+```
 
 ## Setup ENV Vars
 - Account SID: `ENV["ACCOUNT_SID"]`
