@@ -16,6 +16,7 @@ class CopperNet < Sinatra::Base
         erb :blocked_caller, locals: {voice: @voice}
       else
         erb :forward, locals: {caller_number: params[:From], cell_number: ENV["CELL_NUMBER"], voip_number: ENV["VOIP_NUMBER"]}
+      end
     end
   end
 

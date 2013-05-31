@@ -43,4 +43,14 @@ describe "Twilio" do
     doc = Nokogiri::XML(last_response.body)
     doc.xpath("//Response/Gather").first["action"].should == "/dial-out"
   end
+
+  it "should recognize blocked numbers" do
+    app.is_on_blacklist?(3102003399).should be_true
+  end
+
+  it "should block blocked numbers" do
+    get "/", {:From => 3102003399}
+    doc = Nokogiri::XML(last_response.body)
+    doc.xpath("//Response/Say").first.content.should == "This number is no longer in service"
+  end
 end
