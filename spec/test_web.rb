@@ -1,20 +1,15 @@
-ENV["RACK_ENV"] = "test"
-require File.dirname(__FILE__) + "/../app"
-require "rack/test"
-require "nokogiri"
+require_relative "spec_helper.rb"
 
 describe "Twilio" do
   include Rack::Test::Methods
 
-  def app
-    CopperNet.new!
-  end
-
   it "should load menu" do
-    get "/"
-    #last_response.should be_ok
-    doc = Nokogiri::XML(last_response.body)
-    doc.xpath("//Response/Dial").should_not be_nil
+    #get "/"
+    #doc = Nokogiri::XML(last_response.body)
+    #doc.xpath("//Response/Dial").should_not be_nil
+
+    @call = ttt_call("/", 1234567890)
+    @call.has_dial?(ENV["CELL_NUMBER"])
   end
 
   it "should load private menu" do
