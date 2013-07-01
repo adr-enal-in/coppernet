@@ -11,7 +11,11 @@ class CopperNet < Sinatra::Base
     content_type 'application/xml'
   end
 
-  get '/' do
+  get "/" do
+    erb :web_homepage
+  end
+
+  get "/voice/?" do
     if recognized_number?(params[:From])
       erb :private_menu, locals: {voice: @voice}
     else
@@ -23,7 +27,7 @@ class CopperNet < Sinatra::Base
     end
   end
 
-  post '/sms' do
+  post "/sms/?" do
     erb :sms, locals: {message: params[:Body]}
   end
 
@@ -41,7 +45,6 @@ class CopperNet < Sinatra::Base
   end
 
   post "/missed-call" do
-    puts "CALL STATUS=============================="
     puts params[:DialCallStatus]
     puts params
     if params[:DialCallStatus] == "no-answer" or params[:DialCallStatus] == "failed"
