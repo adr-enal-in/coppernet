@@ -41,6 +41,8 @@ class CopperNet < Sinatra::Base
   end
 
   post "/missed-call" do
+    puts "CALL STATUS=============================="
+    puts params[:DialCallStatus]
     if params[:DialCallStatus] == "no-answer" or params[:DialCallStatus] == "failed"
       erb :missed_call_notification, locals: {missed_number: params[:From]}
     end
@@ -72,4 +74,4 @@ class CopperNet < Sinatra::Base
   end
 end
 
-CopperNet.run! if ENV["RACK_ENV"] != "test"
+#CopperNet.run! if ENV["RACK_ENV"] != "test"

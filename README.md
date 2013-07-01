@@ -4,6 +4,9 @@ Welcome to the telephonic cyberspace. Coppernet is an attempt at replacing my Go
 
 *Note: requires Ruby 1.9.3+*
 
+## Setup
+Set environment variables in `.rbenv-vars` using the [example file](https://github.com/adr-enal-in/coppernet/blob/master/example.rbenv-vars).
+
 ## Features
 - Simultaneously forward to multiple numbers
 - Dialing out with caller ID
