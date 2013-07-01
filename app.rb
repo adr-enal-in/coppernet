@@ -7,8 +7,11 @@ class CopperNet < Sinatra::Base
   set :logging, true
   #set :bind, "127.0.0.1" # avoid 0.0.0.0 on all interfaces
 
-  get '/' do
+  before do
     content_type 'application/xml'
+  end
+
+  get '/' do
     if recognized_number?(params[:From])
       erb :private_menu, locals: {voice: @voice}
     else
@@ -21,12 +24,10 @@ class CopperNet < Sinatra::Base
   end
 
   post '/sms' do
-    content_type 'application/xml'
     erb :sms, locals: {message: params[:Body]}
   end
 
   post '/process-private-menu' do
-    content_type 'application/xml'
     case params[:Digits].to_i
     when 1
       erb :voicemail
@@ -35,9 +36,14 @@ class CopperNet < Sinatra::Base
     end
   end
 
-  post '/dial-out' do
-    content_type 'application/xml'
+  post "dial-out" do
     erb :dial_out, locals: {outgoing_number: params[:Digits], voice: @voice}
+  end
+
+  post "/missed-call" do
+    if params[:DialCallStatus] == "no-answer" or params[:DialCallStatus] == "failed"
+      erb :missed_call_notification, locals: {missed_number: params[:From]}
+    end
   end
 
   def recognized_number?(number)

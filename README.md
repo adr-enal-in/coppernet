@@ -8,6 +8,7 @@ Welcome to the telephonic cyberspace. Coppernet is an attempt at replacing my Go
 - Simultaneously forward to multiple numbers
 - Dialing out with caller ID
 - Customizable telemarketer blacklist
+- Missed call notification
 
 ## To Do
 - Voicemail

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Say voice="woman">Forwarding your call.</Say>
-  <Dial timeout="20" callerId="<%= voip_number %>">
+  <Dial timeout="20" callerId="<%= voip_number %>" action="/missed-call">
     <Number><%= cell_number %></Number>
     <Number><%= voip_number %></Number>
   </Dial>
