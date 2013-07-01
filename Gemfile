@@ -1,4 +1,6 @@
 source 'https://rubygems.org'
+ruby "1.9.3"
+
 gem "sinatra", "~> 1.4.2"
 gem "twilio-ruby", "~> 3.9.0"
 gem "trollop", "~> 2.0"
