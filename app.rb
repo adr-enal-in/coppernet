@@ -45,6 +45,7 @@ class CopperNet < Sinatra::Base
     puts params[:DialCallStatus]
     puts params
     if params[:DialCallStatus] == "no-answer" or params[:DialCallStatus] == "failed"
+      puts "rendering view"
       erb :missed_call_notification, locals: {missed_number: params[:From]}
     end
   end

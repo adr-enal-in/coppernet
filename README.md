@@ -27,10 +27,3 @@ Add numbers to the [blacklist](https://gist.github.com/adr-enal-in/5578514) in t
   {"number": "3103438822", "comment": "Cable Company"}
 ]
 ```
-
-## Setup ENV Vars
-- Account SID: `ENV["ACCOUNT_SID"]`
-- Auth token: `ENV["AUTH_TOKEN"]`
-- Cell number: `ENV["CELL_NUMBER"]`
-- Twilio number: `ENV["TWILIO_NUMBER"]`
-- VoIP number: `ENV["VOIP_NUMBER"]`
