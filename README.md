@@ -1,4 +1,4 @@
-# Coppernet
+# CopperNet
 
 Welcome to the telephonic cyberspace. Coppernet is an attempt at replacing my Google Voice account with additional features.
 
