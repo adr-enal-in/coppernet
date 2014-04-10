@@ -10,9 +10,9 @@ Welcome to the telephonic cyberspace. Coppernet is an attempt at replacing my Go
 - Run with `ruby config.ru`
 
 ## Database Stuff
-__Creating migrations__: `rake db:create_migration NAME=create_table_name`
-__Running migrations__: `rake db:migrate` (duh)
-__Creating records via console__: `bundle exec irb`
+- __Creating migrations__: `rake db:create_migration NAME=create_table_name`
+- __Running migrations__: `rake db:migrate` (duh)
+- __Creating records via console__: `bundle exec irb`
 
 [Guide](http://danneu.com/posts/15-a-simple-blog-with-sinatra-and-active-record-some-useful-tools/) for using ActiveRecord with Sinatra.
 
