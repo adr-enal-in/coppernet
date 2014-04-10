@@ -23,7 +23,7 @@ class CopperNet < Sinatra::Base
       if is_on_blacklist?(params[:From])
         erb :blocked_caller, locals: {voice: @voice}
       else
-        erb :forward, locals: {caller_number: params[:From], cell_number: ENV["CELL_NUMBER"], voip_number: ENV["VOIP_NUMBER"]}
+        erb :forward, locals: {caller_number: params[:From], phone_numbers: ENV["PHONE_NUMBERS"].split(',')}
       end
     end
   end
@@ -54,9 +54,11 @@ class CopperNet < Sinatra::Base
     end
   end
 
-  def recognized_number?(number)
-    return false if ENV["CELL_NUMBER"].nil? || ENV["VOIP_NUMBER"].nil?
-    number == ENV["CELL_NUMBER"] || number == ENV["VOIP_NUMBER"]
+  def recognized_number?(incoming_number)
+    ENV["PHONE_NUMBERS"].split(',').each do |number|
+      return true if incoming_number == number
+    end
+    false
   end
 
   def is_on_blacklist?(caller_number)

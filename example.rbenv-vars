@@ -1,6 +1,7 @@
-ACCOUNT_SID=
-AUTH_TOKEN=
-CELL_NUMBER=
-TWILIO_NUMBER=
-VOIP_NUMBER=
+ACCOUNT_SID=[From Twilio]
+AUTH_TOKEN=[From Twilio]
+PHONE_NUMBERS=2121234567,2131234567,4051234567 [Comma-separated phone numbers to forward to with no characters or spaces]
+TWILIO_NUMBER=[Your phone number with Twilio]
 DEFAULT_VOICEMAIL_PASSCODE=1234
+CELL_NUMBER=
+VOIP_NUMBER=

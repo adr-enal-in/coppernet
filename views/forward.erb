@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Dial timeout="15" callerId="<%= voip_number %>" action="/missed-call">
-    <Number><%= cell_number %></Number>
-    <Number><%= voip_number %></Number>
+  <Dial timeout="15" callerId="<%= caller_number %>" action="/missed-call">
+    <% phone_numbers.each do |number| %>
+      <Number><%= number %></Number>
+    <% end %>
   </Dial>
 </Response>
