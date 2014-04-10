@@ -12,6 +12,7 @@ class CopperNet < Sinatra::Base
   end
 
   get "/" do
+    content_type 'text/html'
     erb :web_homepage
   end
 
