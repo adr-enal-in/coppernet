@@ -4,11 +4,11 @@ ruby "1.9.3"
 gem "sinatra", "~> 1.4.2"
 gem "twilio-ruby", "~> 3.9.0"
 gem "trollop", "~> 2.0"
-gem "sqlite3", "~> 1.3.7"
 gem "sinatra-activerecord", "~> 1.2.3"
 
 group :development do
   gem "tux", "~> 0.3.0"
+  gem "sqlite3", "~> 1.3.7"
 end
 
 group :test do
