@@ -1,0 +1,18 @@
+<h1>CopperNet Settings</h1>
+
+<form action="/admin" method="post">
+
+  SMS forwarding:
+  <select name="sms_forwarding">
+    <option value="1" <%= sms_forwarding == '1' ? 'selected':nil %> >Enabled</option>
+    <option value="0" <%= sms_forwarding == '0' ? 'selected':nil %> >Disabled</option>
+  </select>
+
+  <p>Twilio number: <input type="phone" name="twilio_number" value="<%= twilio_number %>"></p>
+
+  <p>Forwarded Numbers<br>
+  <input type="text" name="phone_numbers" value="<%= phone_numbers %>">
+  </p>
+
+  <input type="submit" value="Update">
+</form>

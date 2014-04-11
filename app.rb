@@ -11,6 +11,7 @@ class CopperNet < Sinatra::Base
     content_type 'application/xml'
   end
 
+  # Web homepage
   get "/" do
     content_type 'text/html'
     erb :web_homepage
@@ -54,6 +55,28 @@ class CopperNet < Sinatra::Base
     end
   end
 
+  ##
+  ## Admin area
+  ##
+
+  get "/admin" do
+    content_type 'text/html'
+    protected!
+    erb :admin, locals: {
+      phone_numbers: ENV["PHONE_NUMBERS"],
+      sms_forwarding: ENV["SMS_FORWARDING"],
+      twilio_number: ENV["TWILIO_NUMBER"]
+    }
+  end
+
+  post "/admin" do
+    protected!
+    ENV["SMS_FORWARDING"] = params[:sms_forwarding]
+    ENV["PHONE_NUMBERS"] = params[:phone_numbers]
+    ENV["TWILIO_NUMBER"] = params[:twilio_number]
+    redirect to('/admin')
+  end
+
   def recognized_number?(incoming_number)
     ENV["PHONE_NUMBERS"].split(',').each do |number|
       return true if incoming_number == number
@@ -80,6 +103,20 @@ class CopperNet < Sinatra::Base
       false
     end
   end
+
+  helpers do
+    def protected!
+      return if authorized?
+      headers['WWW-Authenticate'] = 'Basic realm="CopperNet Admin"'
+      halt 401, "Not authorized\n"
+    end
+
+    def authorized?
+      @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+      @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == [ENV["ADMIN_USERNAME"], ENV["ADMIN_PASSWORD"]]
+    end
+  end
 end
+
 
 #CopperNet.run! if ENV["RACK_ENV"] != "test"
