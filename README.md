@@ -23,7 +23,6 @@ Welcome to the telephonic cyberspace. Coppernet is an attempt at replacing my Go
 - Missed call notification
 
 ## To Do
-- Web admin area for changing config
 - Voicemail
 
 ## Blacklist

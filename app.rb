@@ -1,6 +1,7 @@
-require "sinatra/base"
-require "twilio-ruby"
-require "json"
+require 'sinatra/base'
+require 'twilio-ruby'
+require 'json'
+require 'pony'
 
 class CopperNet < Sinatra::Base
   set :voice, "woman"
@@ -47,12 +48,25 @@ class CopperNet < Sinatra::Base
   end
 
   post "/missed-call" do
-    puts params[:DialCallStatus]
-    puts params
-    if params[:DialCallStatus] == "no-answer" or params[:DialCallStatus] == "failed"
-      puts "rendering view"
-      erb :missed_call_notification, locals: {missed_number: params[:From]}
-    end
+    Pony.mail({
+      :to => ENV["NOTIFY_EMAIL"],
+      :from => "dakotah@teardrop.co",
+      :subject => "Missed call from " + params[:From],
+      :body => "At #{Time.now} you missed a call from " + params[:From],
+      :via => :smtp,
+      :via_options => {
+        :port           => '587',
+        :address        => 'smtp.mandrillapp.com',
+        :user_name      => ENV['MANDRILL_USERNAME'],
+        :password       => ENV['MANDRILL_APIKEY'],
+        :domain         => 'heroku.com', # the HELO domain provided by the client to the server
+        :authentication => :plain # :plain, :login, :cram_md5, no auth by default
+      }
+    })
+
+    #if params[:DialCallStatus] == "no-answer" or params[:DialCallStatus] == "failed"
+    #  erb :missed_call_notification, locals: {missed_number: params[:From]}
+    #end
   end
 
   ##
@@ -65,7 +79,8 @@ class CopperNet < Sinatra::Base
     erb :admin, locals: {
       phone_numbers: ENV["PHONE_NUMBERS"],
       sms_forwarding: ENV["SMS_FORWARDING"],
-      twilio_number: ENV["TWILIO_NUMBER"]
+      twilio_number: ENV["TWILIO_NUMBER"],
+      notify_email: ENV["NOTIFY_EMAIL"]
     }
   end
 
@@ -74,6 +89,7 @@ class CopperNet < Sinatra::Base
     ENV["SMS_FORWARDING"] = params[:sms_forwarding]
     ENV["PHONE_NUMBERS"] = params[:phone_numbers]
     ENV["TWILIO_NUMBER"] = params[:twilio_number]
+    ENV["NOTIFY_EMAIL"] = params[:notify_email]
     redirect to('/admin')
   end
 

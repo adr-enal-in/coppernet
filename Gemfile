@@ -5,6 +5,7 @@ gem "sinatra", "~> 1.4.2"
 gem "twilio-ruby", "~> 3.9.0"
 gem "trollop", "~> 2.0"
 gem "sinatra-activerecord", "~> 1.2.3"
+gem 'pony', '~> 1.8'
 
 group :development do
   gem "tux", "~> 0.3.0"

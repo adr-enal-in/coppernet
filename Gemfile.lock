@@ -32,10 +32,16 @@ GEM
     i18n (0.6.4)
     jwt (0.1.11)
       multi_json (>= 1.5)
+    mail (2.5.4)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
     mime-types (1.23)
     minitest (4.7.5)
     multi_json (1.7.7)
     nokogiri (1.5.9)
+    polyglot (0.3.4)
+    pony (1.8)
+      mail (>= 2.0)
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
@@ -72,6 +78,9 @@ GEM
     thread_safe (0.1.0)
       atomic
     tilt (1.4.1)
+    treetop (1.4.15)
+      polyglot
+      polyglot (>= 0.3.1)
     trollop (2.0)
     tux (0.3.0)
       ripl (>= 0.3.5)
@@ -96,6 +105,7 @@ PLATFORMS
 DEPENDENCIES
   capybara (~> 2.1.0)
   nokogiri (~> 1.5.9)
+  pony (~> 1.8)
   rspec (~> 2.13.0)
   sinatra (~> 1.4.2)
   sinatra-activerecord (~> 1.2.3)
