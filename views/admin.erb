@@ -1,18 +1,61 @@
-<h1>CopperNet Settings</h1>
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CopperNet Settings</title>
+    <link rel="stylesheet" href="/css/foundation.css" />
+    <script src="/js/vendor/modernizr.js"></script>
+  </head>
+  <body>
 
-<form action="/admin" method="post">
+  <div class="row">
+    <div class="small-12 columns">
+      <h1>CopperNet Settings</h1>
+    </div>
+  </div>
 
-  SMS forwarding:
-  <select name="sms_forwarding">
-    <option value="1" <%= sms_forwarding == '1' ? 'selected':nil %> >Enabled</option>
-    <option value="0" <%= sms_forwarding == '0' ? 'selected':nil %> >Disabled</option>
-  </select>
+  <form action="/admin" method="post">
 
-  <p>Twilio number: <input type="phone" name="twilio_number" value="<%= twilio_number %>"></p>
+  <div class="row">
+    <div class="small-4 columns">
+      <label>Twilio phone number
+        <input type="text" name="twilio_number" value="<%= twilio_number %>"></p>
+      </label>
+    </div>
+  </div>
 
-  <p>Forwarded Numbers<br>
-  <input type="text" name="phone_numbers" value="<%= phone_numbers %>">
-  </p>
+  <div class="row">
+    <div class="small-12 large-4 columns">
+        <label>Forwarded Numbers
+          <input type="text" name="phone_numbers" value="<%= phone_numbers %>">
+        </label>
+    </div>
+  </div>
 
-  <input type="submit" value="Update">
-</form>
+  <div class="row">
+    <div class="small-12 large-3 columns">
+        <label>SMS forwarding
+          <select name="sms_forwarding">
+            <option value="1" <%= sms_forwarding == '1' ? 'selected':nil %> >Enabled</option>
+            <option value="0" <%= sms_forwarding == '0' ? 'selected':nil %> >Disabled</option>
+          </select>
+        </label>
+
+        <input type="submit" value="Update" class="button">
+    </div>
+  </div>
+
+  </form>
+
+
+
+    <script src="/js/vendor/jquery.js"></script>
+    <script src="/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>
+
+
