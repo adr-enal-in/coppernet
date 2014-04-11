@@ -23,6 +23,7 @@ Welcome to the telephonic cyberspace. Coppernet is an attempt at replacing my Go
 - Missed call notification
 
 ## To Do
+- Web admin area for changing config
 - Voicemail
 
 ## Blacklist
@@ -34,3 +35,6 @@ Add numbers to the [blacklist](https://gist.github.com/adr-enal-in/5578514) in t
   {"number": "3103438822", "comment": "Cable Company"}
 ]
 ```
+
+## Heroku Tips
+Because Heroku shuts down inactive apps you might want to hit the web URL on a recurring basis with a cron or site uptime checking service to prevent it from sleeping lest your callers get a weird delay before the app runs.
